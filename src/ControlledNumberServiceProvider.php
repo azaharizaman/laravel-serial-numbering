@@ -2,14 +2,14 @@
 
 namespace AzahariZaman\ControlledNumber;
 
-use AzahariZaman\ControlledNumber\Console\Commands\ValidatePatternsCommand;
+use Illuminate\Support\ServiceProvider;
 use AzahariZaman\ControlledNumber\Models\SerialLog;
-use AzahariZaman\ControlledNumber\Observers\SerialLogObserver;
 use AzahariZaman\ControlledNumber\Services\SerialManager;
 use AzahariZaman\ControlledNumber\Services\SegmentResolver;
-use Illuminate\Support\ServiceProvider;
+use AzahariZaman\ControlledNumber\Observers\SerialLogObserver;
+use AzahariZaman\ControlledNumber\Console\Commands\ValidatePatternsCommand;
 
-class SerialPatternServiceProvider extends ServiceProvider
+class ControlledNumberServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
