@@ -74,7 +74,7 @@ class SerialLog extends Model
     {
         $this->update([
             'is_void' => true,
-            'voided_at' => date('Y-m-d H:i:s'),
+            'voided_at' => now(),
             'void_reason' => $reason,
         ]);
 
