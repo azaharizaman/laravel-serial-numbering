@@ -1,8 +1,8 @@
 <?php
 
-namespace Azahari\SerialPattern\Behaviors;
+namespace AzahariZaman\ControlledNumber\Behaviors;
 
-use Azahari\SerialPattern\Enums\ResetType;
+use AzahariZaman\ControlledNumber\Enums\ResetType;
 
 trait Resettable
 {

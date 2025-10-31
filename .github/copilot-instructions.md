@@ -1,7 +1,7 @@
 ## 🧭 GitHub Copilot Agent Instruction: Laravel Serial Numbering Package with Audit Logging
 
 ### 🏷️ Package Name
-`azahari/laravel-serial-pattern`
+`azaharizaman/controlled-number`
 
 ---
 
@@ -104,10 +104,10 @@ laravel-serial-pattern/
 ---
 
 ```bash
-mkdir -p packages/azahari/laravel-serial-pattern/src
-cd packages/azahari/laravel-serial-pattern
+mkdir -p packages/azaharizaman/controlled-number/src
+cd packages/azaharizaman/controlled-number
 
-composer init --name="azahari/laravel-serial-pattern" --description="Configurable serial number generator for Laravel models with optional audit logging" --type="library" --license="MIT" --require="illuminate/support:^10.0" --autoload="psr-4" --autoload-psr4="Azahari\\SerialPattern\\":"src/"
+composer init --name="azaharizaman/controlled-number" --description="Configurable serial number generator for Laravel models with optional audit logging" --type="library" --license="MIT" --require="illuminate/support:^10.0" --autoload="psr-4" --autoload-psr4="AzahariZaman\\ControlledNumber\\":"src/"
 ```
 
 Create the following files and folders:
@@ -323,7 +323,7 @@ public function boot()
 - Optional resource classes for managing patterns, logs, and previewing serials in admin panels.
 
 ### j. **Testbench Integration**
-- Include Orchestral Testbench for package-level testing in isolation.
+- Run test with phpunit 
 
 ### k. **Pattern Discovery**
 - Auto-discover patterns from config or database and register them dynamically.
@@ -348,7 +348,7 @@ public function boot()
 ### o. **Packagist Publishing**
 - Make it installable via Composer:
   ```bash
-  composer require azahari/laravel-serial-pattern
+  composer require azaharizaman/controlled-number
   ```
 
 ### p. **GitHub Actions CI**
@@ -412,15 +412,12 @@ public function boot()
   - Include a clear **README.md**
   - Add a **LICENSE** (MIT recommended)
   - Tag releases with semantic versioning (`v1.0.0`, `v1.1.0`, etc.)
-  - Use **GitHub Actions** or **Orchestral Testbench** for testing
+  - Use **GitHub Actions** for testing
 
 ---
 
 ## 🧪 Testing Tools
 
-- **Orchestral Testbench**:  
-  [Testbench GitHub Repo](https://github.com/orchestral/testbench)  
-  Allows you to test your package as if it were inside a Laravel app.
 
 - **Pest PHP**:  
   [Pest Testing Framework](https://pestphp.com/docs/introduction)  

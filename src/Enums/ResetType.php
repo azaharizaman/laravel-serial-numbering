@@ -1,6 +1,6 @@
 <?php
 
-namespace Azahari\SerialPattern\Enums;
+namespace AzahariZaman\ControlledNumber\Enums;
 
 enum ResetType: string
 {

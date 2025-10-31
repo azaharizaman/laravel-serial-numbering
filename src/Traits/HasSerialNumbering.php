@@ -1,9 +1,9 @@
 <?php
 
-namespace Azahari\SerialPattern\Traits;
+namespace AzahariZaman\ControlledNumber\Traits;
 
-use Azahari\SerialPattern\Models\SerialLog;
-use Azahari\SerialPattern\Services\SerialManager;
+use AzahariZaman\ControlledNumber\Models\SerialLog;
+use AzahariZaman\ControlledNumber\Services\SerialManager;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait HasSerialNumbering

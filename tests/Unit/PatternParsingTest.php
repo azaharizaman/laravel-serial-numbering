@@ -1,10 +1,10 @@
 <?php
 
-namespace Azahari\SerialPattern\Tests\Unit;
+namespace AzahariZaman\ControlledNumber\Tests\Unit;
 
-use Azahari\SerialPattern\Exceptions\InvalidPatternException;
-use Azahari\SerialPattern\Services\SerialPattern;
-use PHPUnit\Framework\TestCase;
+use AzahariZaman\ControlledNumber\Exceptions\InvalidPatternException;
+use AzahariZaman\ControlledNumber\Services\SerialPattern;
+use AzahariZaman\ControlledNumber\Tests\TestCase;
 
 class PatternParsingTest extends TestCase
 {

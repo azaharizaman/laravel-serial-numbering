@@ -1,6 +1,6 @@
 <?php
 
-namespace Azahari\SerialPattern\Casts;
+namespace AzahariZaman\ControlledNumber\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;

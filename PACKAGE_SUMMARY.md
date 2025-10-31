@@ -2,7 +2,7 @@
 
 ## 📦 Package Information
 
-**Name:** azahari/laravel-serial-pattern  
+**Name:** azaharizaman/controlled-number  
 **Version:** 1.0.0  
 **License:** MIT  
 **PHP Version:** ^8.1  
@@ -240,7 +240,7 @@ vendor/bin/phpunit
 
 ```bash
 # Install package
-composer require azahari/laravel-serial-pattern
+composer require azaharizaman/controlled-number
 
 # Publish config
 php artisan vendor:publish --tag=serial-pattern-config
@@ -306,4 +306,4 @@ php artisan serial:validate-patterns
 **Package Developed by:** Azahari Zaman  
 **Email:** azaharizaman@gmail.com  
 **License:** MIT  
-**Repository:** https://github.com/azahari/laravel-serial-pattern
+**Repository:** https://github.com/azaharizaman/controlled-number

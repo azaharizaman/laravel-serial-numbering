@@ -1,8 +1,8 @@
 <?php
 
-namespace Azahari\SerialPattern\Events;
+namespace AzahariZaman\ControlledNumber\Events;
 
-use Azahari\SerialPattern\Models\SerialLog;
+use AzahariZaman\ControlledNumber\Models\SerialLog;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 

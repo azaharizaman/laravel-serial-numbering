@@ -1,8 +1,8 @@
 <?php
 
-namespace Azahari\SerialPattern\Services;
+namespace AzahariZaman\ControlledNumber\Services;
 
-use Azahari\SerialPattern\Contracts\SegmentInterface;
+use AzahariZaman\ControlledNumber\Contracts\SegmentInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
@@ -15,7 +15,7 @@ class SegmentResolver
 
     public function __construct()
     {
-        $this->customResolvers = config('serial-pattern.segments', []);
+        $this->customResolvers = function_exists('config') ? config('serial-pattern.segments', []) : [];
     }
 
     /**
@@ -50,17 +50,17 @@ class SegmentResolver
         // Resolve built-in segments
         return match($segment) {
             'number' => $context['number'] ?? '0',
-            'year' => now()->format('Y'),
-            'year_short' => now()->format('y'),
-            'month' => now()->format('m'),
-            'month_name' => now()->format('M'),
-            'day' => now()->format('d'),
-            'hour' => now()->format('H'),
-            'minute' => now()->format('i'),
-            'second' => now()->format('s'),
-            'week' => now()->format('W'),
-            'quarter' => (string)now()->quarter,
-            'timestamp' => (string)now()->timestamp,
+            'year' => Carbon::now()->format('Y'),
+            'year_short' => Carbon::now()->format('y'),
+            'month' => Carbon::now()->format('m'),
+            'month_name' => Carbon::now()->format('M'),
+            'day' => Carbon::now()->format('d'),
+            'hour' => Carbon::now()->format('H'),
+            'minute' => Carbon::now()->format('i'),
+            'second' => Carbon::now()->format('s'),
+            'week' => Carbon::now()->format('W'),
+            'quarter' => (string)Carbon::now()->quarter,
+            'timestamp' => (string)Carbon::now()->timestamp,
             default => $segment,
         };
     }
@@ -76,7 +76,11 @@ class SegmentResolver
             return $segment;
         }
 
-        $resolver = app($resolverClass);
+        if (function_exists('app')) {
+            $resolver = app($resolverClass);
+        } else {
+            $resolver = new $resolverClass();
+        }
 
         if ($resolver instanceof SegmentInterface) {
             return $resolver->resolve($model, $context);
@@ -95,7 +99,7 @@ class SegmentResolver
         }
 
         // Use caching for model properties
-        if ($this->cacheEnabled) {
+        if ($this->cacheEnabled && class_exists('Illuminate\\Support\\Facades\\Cache')) {
             $cacheKey = "serial_segment:{$segment}:" . get_class($model) . ":{$model->getKey()}";
             
             return Cache::remember($cacheKey, $this->cacheTtl, function () use ($segment, $model) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Azahari\SerialPattern\Contracts;
+namespace AzahariZaman\ControlledNumber\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
 

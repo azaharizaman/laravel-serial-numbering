@@ -1,13 +1,13 @@
 <?php
 
-namespace Azahari\SerialPattern\Models;
+namespace AzahariZaman\ControlledNumber\Models;
 
-use Azahari\SerialPattern\Events\SerialNumberVoided;
-use Azahari\SerialPattern\Exceptions\SerialDeletionNotAllowedException;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use AzahariZaman\ControlledNumber\Events\SerialNumberVoided;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use AzahariZaman\ControlledNumber\Exceptions\SerialDeletionNotAllowedException;
 
 class SerialLog extends Model
 {
@@ -52,7 +52,11 @@ class SerialLog extends Model
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(config('auth.providers.users.model'));
+        $userModel = 'App\\Models\\User';
+        if (function_exists('config')) {
+            $userModel = config('auth.providers.users.model', $userModel);
+        }
+        return $this->belongsTo($userModel);
     }
 
     /**
@@ -70,11 +74,13 @@ class SerialLog extends Model
     {
         $this->update([
             'is_void' => true,
-            'voided_at' => now(),
+            'voided_at' => date('Y-m-d H:i:s'),
             'void_reason' => $reason,
         ]);
 
-        event(new SerialNumberVoided($this, $this->serial, $reason));
+        if (function_exists('event')) {
+            event(new SerialNumberVoided($this, $this->serial, $reason));
+        }
     }
 
     /**

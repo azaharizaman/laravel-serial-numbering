@@ -1,12 +1,12 @@
 <?php
 
-namespace Azahari\SerialPattern;
+namespace AzahariZaman\ControlledNumber;
 
-use Azahari\SerialPattern\Console\Commands\ValidatePatternsCommand;
-use Azahari\SerialPattern\Models\SerialLog;
-use Azahari\SerialPattern\Observers\SerialLogObserver;
-use Azahari\SerialPattern\Services\SerialManager;
-use Azahari\SerialPattern\Services\SegmentResolver;
+use AzahariZaman\ControlledNumber\Console\Commands\ValidatePatternsCommand;
+use AzahariZaman\ControlledNumber\Models\SerialLog;
+use AzahariZaman\ControlledNumber\Observers\SerialLogObserver;
+use AzahariZaman\ControlledNumber\Services\SerialManager;
+use AzahariZaman\ControlledNumber\Services\SegmentResolver;
 use Illuminate\Support\ServiceProvider;
 
 class SerialPatternServiceProvider extends ServiceProvider

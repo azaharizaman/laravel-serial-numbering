@@ -1,6 +1,6 @@
 <?php
 
-namespace Azahari\SerialPattern\Exceptions;
+namespace AzahariZaman\ControlledNumber\Exceptions;
 
 use Exception;
 

@@ -15,3 +15,7 @@ composer.lock
 phpunit.xml
 .DS_Store
 Thumbs.db
+
+# Coverage reports
+/coverage-report/
+coverage.xml

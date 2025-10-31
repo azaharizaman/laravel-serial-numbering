@@ -1,9 +1,9 @@
 <?php
 
-namespace Azahari\SerialPattern\Console\Commands;
+namespace AzahariZaman\ControlledNumber\Console\Commands;
 
-use Azahari\SerialPattern\Helpers\SerialHelper;
-use Azahari\SerialPattern\Services\SerialManager;
+use AzahariZaman\ControlledNumber\Helpers\SerialHelper;
+use AzahariZaman\ControlledNumber\Services\SerialManager;
 use Illuminate\Console\Command;
 
 class ValidatePatternsCommand extends Command

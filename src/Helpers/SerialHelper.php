@@ -1,9 +1,9 @@
 <?php
 
-namespace Azahari\SerialPattern\Helpers;
+namespace AzahariZaman\ControlledNumber\Helpers;
 
-use Azahari\SerialPattern\Models\SerialLog;
-use Azahari\SerialPattern\Services\SerialManager;
+use AzahariZaman\ControlledNumber\Models\SerialLog;
+use AzahariZaman\ControlledNumber\Services\SerialManager;
 use Illuminate\Support\Collection;
 
 class SerialHelper

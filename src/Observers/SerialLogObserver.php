@@ -1,8 +1,8 @@
 <?php
 
-namespace Azahari\SerialPattern\Observers;
+namespace AzahariZaman\ControlledNumber\Observers;
 
-use Azahari\SerialPattern\Models\SerialLog;
+use AzahariZaman\ControlledNumber\Models\SerialLog;
 use Illuminate\Support\Facades\Log;
 
 class SerialLogObserver

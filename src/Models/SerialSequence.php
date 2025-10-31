@@ -1,8 +1,8 @@
 <?php
 
-namespace Azahari\SerialPattern\Models;
+namespace AzahariZaman\ControlledNumber\Models;
 
-use Azahari\SerialPattern\Enums\ResetType;
+use AzahariZaman\ControlledNumber\Enums\ResetType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 

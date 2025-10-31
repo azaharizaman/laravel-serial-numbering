@@ -1,8 +1,8 @@
 # Laravel Serial Pattern
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/azahari/laravel-serial-pattern.svg?style=flat-square)](https://packagist.org/packages/azahari/laravel-serial-pattern)
-[![Total Downloads](https://img.shields.io/packagist/dt/azahari/laravel-serial-pattern.svg?style=flat-square)](https://packagist.org/packages/azahari/laravel-serial-pattern)
-[![License](https://img.shields.io/packagist/l/azahari/laravel-serial-pattern.svg?style=flat-square)](https://packagist.org/packages/azahari/laravel-serial-pattern)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/azaharizaman/controlled-number.svg?style=flat-square)](https://packagist.org/packages/azaharizaman/controlled-number)
+[![Total Downloads](https://img.shields.io/packagist/dt/azaharizaman/controlled-number.svg?style=flat-square)](https://packagist.org/packages/azaharizaman/controlled-number)
+[![License](https://img.shields.io/packagist/l/azaharizaman/controlled-number.svg?style=flat-square)](https://packagist.org/packages/azaharizaman/controlled-number)
 
 A powerful Laravel 12 package for generating configurable serial numbers with dynamic segments, auto-reset rules, and comprehensive audit logging. Perfect for invoices, orders, tickets, and any entity requiring unique sequential identifiers.
 
@@ -23,7 +23,7 @@ A powerful Laravel 12 package for generating configurable serial numbers with dy
 Install via Composer:
 
 ```bash
-composer require azahari/laravel-serial-pattern
+composer require azaharizaman/controlled-number
 ```
 
 Publish the configuration file:
@@ -67,7 +67,7 @@ Edit `config/serial-pattern.php`:
 Add the trait to your Eloquent model:
 
 ```php
-use Azahari\SerialPattern\Traits\HasSerialNumbering;
+use AzahariZaman\ControlledNumber\Traits\HasSerialNumbering;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
@@ -97,7 +97,7 @@ echo $invoice->invoice_number; // INV-2024-10-01000
 Or generate manually:
 
 ```php
-use Azahari\SerialPattern\Services\SerialManager;
+use AzahariZaman\ControlledNumber\Services\SerialManager;
 
 $manager = app(SerialManager::class);
 $serial = $manager->generate('invoice');
@@ -142,7 +142,7 @@ Create your resolver:
 ```php
 namespace App\Segments;
 
-use Azahari\SerialPattern\Contracts\SegmentInterface;
+use AzahariZaman\ControlledNumber\Contracts\SegmentInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class BranchCodeResolver implements SegmentInterface
@@ -223,7 +223,7 @@ $manager->resetSequence('invoice', 5000); // Reset to specific value
 ### Export Audit Logs
 
 ```php
-use Azahari\SerialPattern\Helpers\SerialHelper;
+use AzahariZaman\ControlledNumber\Helpers\SerialHelper;
 
 // Export to CSV
 $csv = SerialHelper::exportToCsv([
@@ -278,7 +278,7 @@ php artisan serial:validate-patterns --stats
 The `SerialLog` model provides useful query scopes:
 
 ```php
-use Azahari\SerialPattern\Models\SerialLog;
+use AzahariZaman\ControlledNumber\Models\SerialLog;
 
 // Get active serials
 $active = SerialLog::active()->get();
@@ -348,6 +348,6 @@ The MIT License (MIT). Please see [License File](LICENSE) for more information.
 
 ## Support
 
-- **Documentation**: [Full documentation](https://github.com/azahari/laravel-serial-pattern)
-- **Issues**: [GitHub Issues](https://github.com/azahari/laravel-serial-pattern/issues)
+- **Documentation**: [Full documentation](https://github.com/azaharizaman/controlled-number)
+- **Issues**: [GitHub Issues](https://github.com/azaharizaman/controlled-number/issues)
 - **Email**: azaharizaman@gmail.com

@@ -52,7 +52,7 @@ $serial = $manager->generate('invoice');
 ```php
 namespace App\Models;
 
-use Azahari\SerialPattern\Traits\HasSerialNumbering;
+use AzahariZaman\ControlledNumber\Traits\HasSerialNumbering;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
@@ -98,7 +98,7 @@ $invoice->voidSerial('Customer cancelled order');
 ```php
 namespace App\Models;
 
-use Azahari\SerialPattern\Traits\HasSerialNumbering;
+use AzahariZaman\ControlledNumber\Traits\HasSerialNumbering;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -140,7 +140,7 @@ echo $order->serial_number; // ORD-2024-SALES-0001
 // app/Segments/BranchCodeResolver.php
 namespace App\Segments;
 
-use Azahari\SerialPattern\Contracts\SegmentInterface;
+use AzahariZaman\ControlledNumber\Contracts\SegmentInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class BranchCodeResolver implements SegmentInterface
@@ -187,7 +187,7 @@ class BranchCodeResolver implements SegmentInterface
 ```php
 namespace App\Segments;
 
-use Azahari\SerialPattern\Contracts\SegmentInterface;
+use AzahariZaman\ControlledNumber\Contracts\SegmentInterface;
 use Illuminate\Database\Eloquent\Model;
 
 class ProjectCodeResolver implements SegmentInterface
@@ -272,7 +272,7 @@ class ProjectCodeResolver implements SegmentInterface
 ### Query Serial Logs
 
 ```php
-use Azahari\SerialPattern\Models\SerialLog;
+use AzahariZaman\ControlledNumber\Models\SerialLog;
 
 // Get all active serials
 $activeSerials = SerialLog::active()->get();
@@ -308,7 +308,7 @@ $recentVoided = SerialLog::forPattern('order')
 ### Export Audit Logs
 
 ```php
-use Azahari\SerialPattern\Helpers\SerialHelper;
+use AzahariZaman\ControlledNumber\Helpers\SerialHelper;
 
 // Export to CSV
 $csv = SerialHelper::exportToCsv([
@@ -333,7 +333,7 @@ file_put_contents('my_serials.json', $json);
 ### Pattern Statistics
 
 ```php
-use Azahari\SerialPattern\Helpers\SerialHelper;
+use AzahariZaman\ControlledNumber\Helpers\SerialHelper;
 
 $stats = SerialHelper::getPatternStats('invoice');
 

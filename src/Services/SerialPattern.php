@@ -1,8 +1,8 @@
 <?php
 
-namespace Azahari\SerialPattern\Services;
+namespace AzahariZaman\ControlledNumber\Services;
 
-use Azahari\SerialPattern\Exceptions\InvalidPatternException;
+use AzahariZaman\ControlledNumber\Exceptions\InvalidPatternException;
 
 class SerialPattern
 {

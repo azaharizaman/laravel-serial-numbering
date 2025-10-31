@@ -1,13 +1,13 @@
 <?php
 
-namespace Azahari\SerialPattern\Services;
+namespace AzahariZaman\ControlledNumber\Services;
 
-use Azahari\SerialPattern\Enums\ResetType;
-use Azahari\SerialPattern\Events\SerialNumberGenerated;
-use Azahari\SerialPattern\Exceptions\InvalidPatternException;
-use Azahari\SerialPattern\Exceptions\SerialCollisionException;
-use Azahari\SerialPattern\Models\SerialLog;
-use Azahari\SerialPattern\Models\SerialSequence;
+use AzahariZaman\ControlledNumber\Enums\ResetType;
+use AzahariZaman\ControlledNumber\Events\SerialNumberGenerated;
+use AzahariZaman\ControlledNumber\Exceptions\InvalidPatternException;
+use AzahariZaman\ControlledNumber\Exceptions\SerialCollisionException;
+use AzahariZaman\ControlledNumber\Models\SerialLog;
+use AzahariZaman\ControlledNumber\Models\SerialSequence;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;

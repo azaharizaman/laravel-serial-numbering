@@ -1,8 +1,8 @@
 <?php
 
-namespace Azahari\SerialPattern\Policies;
+namespace AzahariZaman\ControlledNumber\Policies;
 
-use Azahari\SerialPattern\Models\SerialLog;
+use AzahariZaman\ControlledNumber\Models\SerialLog;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SerialLogPolicy
