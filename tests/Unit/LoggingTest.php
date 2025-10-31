@@ -5,6 +5,7 @@ namespace AzahariZaman\ControlledNumber\Tests\Unit;
 use AzahariZaman\ControlledNumber\Exceptions\SerialDeletionNotAllowedException;
 use AzahariZaman\ControlledNumber\Models\SerialLog;
 use AzahariZaman\ControlledNumber\Tests\TestCase;
+use Carbon\Carbon;
 
 class LoggingTest extends TestCase
 {
@@ -13,7 +14,7 @@ class LoggingTest extends TestCase
         $log = SerialLog::create([
             'serial' => 'INV-2024-00001',
             'pattern_name' => 'invoice',
-            'generated_at' => date('Y-m-d H:i:s'),
+            'generated_at' => Carbon::now(),
             'is_void' => false,
         ]);
         
@@ -27,7 +28,7 @@ class LoggingTest extends TestCase
         $log = SerialLog::create([
             'serial' => 'INV-2024-00001',
             'pattern_name' => 'invoice',
-            'generated_at' => date('Y-m-d H:i:s'),
+            'generated_at' => Carbon::now(),
             'is_void' => false,
         ]);
         
@@ -45,7 +46,7 @@ class LoggingTest extends TestCase
         $log = SerialLog::create([
             'serial' => 'INV-2024-00001',
             'pattern_name' => 'invoice',
-            'generated_at' => date('Y-m-d H:i:s'),
+            'generated_at' => Carbon::now(),
             'is_void' => false,
         ]);
         
@@ -57,14 +58,14 @@ class LoggingTest extends TestCase
         SerialLog::create([
             'serial' => 'INV-2024-00001',
             'pattern_name' => 'invoice',
-            'generated_at' => date('Y-m-d H:i:s'),
+            'generated_at' => Carbon::now(),
             'is_void' => false,
         ]);
         
         SerialLog::create([
             'serial' => 'INV-2024-00002',
             'pattern_name' => 'invoice',
-            'generated_at' => date('Y-m-d H:i:s'),
+            'generated_at' => Carbon::now(),
             'is_void' => true,
         ]);
         
@@ -79,14 +80,14 @@ class LoggingTest extends TestCase
         SerialLog::create([
             'serial' => 'INV-2024-00001',
             'pattern_name' => 'invoice',
-            'generated_at' => date('Y-m-d H:i:s'),
+            'generated_at' => Carbon::now(),
             'is_void' => false,
         ]);
         
         SerialLog::create([
             'serial' => 'INV-2024-00002',
             'pattern_name' => 'invoice',
-            'generated_at' => date('Y-m-d H:i:s'),
+            'generated_at' => Carbon::now(),
             'is_void' => true,
         ]);
         
@@ -101,14 +102,14 @@ class LoggingTest extends TestCase
         SerialLog::create([
             'serial' => 'INV-2024-00001',
             'pattern_name' => 'invoice',
-            'generated_at' => date('Y-m-d H:i:s'),
+            'generated_at' => Carbon::now(),
             'is_void' => false,
         ]);
         
         SerialLog::create([
             'serial' => 'ORD-2024-00001',
             'pattern_name' => 'order',
-            'generated_at' => date('Y-m-d H:i:s'),
+            'generated_at' => Carbon::now(),
             'is_void' => false,
         ]);
         

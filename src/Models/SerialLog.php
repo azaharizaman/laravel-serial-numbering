@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use AzahariZaman\ControlledNumber\Events\SerialNumberVoided;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use AzahariZaman\ControlledNumber\Exceptions\SerialDeletionNotAllowedException;
+use Illuminate\Support\Carbon;
 
 class SerialLog extends Model
 {
@@ -74,7 +75,7 @@ class SerialLog extends Model
     {
         $this->update([
             'is_void' => true,
-            'voided_at' => now(),
+            'voided_at' => Carbon::now(),
             'void_reason' => $reason,
         ]);
 

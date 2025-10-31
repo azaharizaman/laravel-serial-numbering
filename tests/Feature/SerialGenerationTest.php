@@ -9,6 +9,7 @@ use AzahariZaman\ControlledNumber\Services\SerialManager;
 use AzahariZaman\ControlledNumber\Services\SerialPattern;
 use AzahariZaman\ControlledNumber\Services\SegmentResolver;
 use AzahariZaman\ControlledNumber\Tests\TestCase;
+use Carbon\Carbon;
 
 class SerialGenerationTest extends TestCase
 {
@@ -59,7 +60,7 @@ class SerialGenerationTest extends TestCase
         $log = SerialLog::create([
             'serial' => 'INV-2024-00001',
             'pattern_name' => 'invoice',
-            'generated_at' => date('Y-m-d H:i:s'),
+            'generated_at' => Carbon::now(),
             'is_void' => false,
         ]);
         

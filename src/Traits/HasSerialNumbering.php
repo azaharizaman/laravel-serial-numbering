@@ -93,9 +93,19 @@ trait HasSerialNumbering
     protected function hasSerialColumn(): bool
     {
         $column = $this->getSerialColumn();
-        return in_array($column, $this->getFillable()) || 
-               (method_exists($this, 'getConnection') && 
-                \Illuminate\Support\Facades\Schema::hasColumn($this->getTable(), $column));
+        
+        // Check fillable first (no DB query)
+        if (in_array($column, $this->getFillable())) {
+            return true;
+        }
+        
+        // Cache the schema check result to avoid repeated DB queries
+        $cacheKey = 'serial_column_exists:' . static::class . ':' . $column;
+        
+        return cache()->rememberForever($cacheKey, function () use ($column) {
+            return method_exists($this, 'getConnection') && 
+                   \Illuminate\Support\Facades\Schema::hasColumn($this->getTable(), $column);
+        });
     }
 
     /**
