@@ -1,0 +1,17 @@
+/vendor/
+/node_modules/
+/.idea/
+/.vscode/
+/.vagrant/
+/.phpunit.cache
+.env
+.env.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+composer.lock
+phpunit.xml
+.DS_Store
+Thumbs.db
