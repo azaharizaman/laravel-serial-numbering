@@ -1,5 +1,5 @@
 {
-  "name": "azaharizaman/controlled-number",
+  "name": "azaharizaman/laravel-serial-numbering",
   "description": "A Laravel 12 Composer package for configurable serial number generation with optional audit logging and model integration.",
   "type": "library",
   "license": "MIT",
