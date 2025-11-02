@@ -105,7 +105,7 @@ class SerialManager
                 'current_number' => $numberConfig['start'] - 1,
                 'reset_type' => ResetType::from($patternConfig['reset'] ?? 'never'),
                 'reset_interval' => $patternConfig['interval'] ?? null,
-                'last_reset_at' => now(),
+                'last_reset_at' => function_exists('now') ? now() : \Illuminate\Support\Carbon::now(),
             ]);
         }
 
@@ -147,7 +147,7 @@ class SerialManager
             'model_type' => $model ? get_class($model) : null,
             'model_id' => $model ? $model->getKey() : null,
             'user_id' => $userId,
-            'generated_at' => now(),
+            'generated_at' => function_exists('now') ? now() : \Illuminate\Support\Carbon::now(),
             'is_void' => false,
         ]);
 

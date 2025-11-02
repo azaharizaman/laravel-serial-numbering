@@ -7,6 +7,10 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
 use PHPUnit\Framework\TestCase as BaseTestCase;
+use AzahariZaman\ControlledNumber\Tests\Support\TestApp;
+use AzahariZaman\ControlledNumber\Tests\Support\TestConfig;
+use AzahariZaman\ControlledNumber\Tests\Support\TestAuth;
+use AzahariZaman\ControlledNumber\Tests\Support\TestEvents;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -73,6 +77,11 @@ abstract class TestCase extends BaseTestCase
             DB::schema()->dropIfExists('serial_logs');
             DB::schema()->dropIfExists('serial_sequences');
         }
+
+        TestApp::flush();
+        TestConfig::reset();
+        TestAuth::guest();
+        TestEvents::reset();
         
         parent::tearDown();
     }

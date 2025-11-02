@@ -26,7 +26,10 @@
   "autoload-dev": {
     "psr-4": {
       "AzahariZaman\\ControlledNumber\\Tests\\": "tests/"
-    }
+    },
+    "files": [
+      "tests/Support/LaravelStubs.php"
+    ]
   },
   "extra": {
     "laravel": {

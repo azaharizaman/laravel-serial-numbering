@@ -2,8 +2,8 @@
 
 namespace AzahariZaman\ControlledNumber\Models;
 
-use AzahariZaman\ControlledNumber\Enums\ResetType;
 use Illuminate\Database\Eloquent\Model;
+use AzahariZaman\ControlledNumber\Enums\ResetType;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class SerialSequence extends Model
@@ -58,7 +58,7 @@ class SerialSequence extends Model
     {
         $this->update([
             'current_number' => $startValue,
-            'last_reset_at' => now(),
+            'last_reset_at' => function_exists('now') ? now() : \Illuminate\Support\Carbon::now(),
         ]);
     }
 
