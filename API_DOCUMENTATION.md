@@ -2,6 +2,15 @@
 
 This document describes the RESTful API endpoints provided by the Laravel Serial Pattern package.
 
+## ⚠️ Security Notice
+
+Before using the API in production, please review the [SECURITY.md](SECURITY.md) document for important security configurations:
+
+- **Required**: Configure model whitelist to prevent arbitrary class instantiation
+- **Required**: Implement authorization checks for your use case
+- **Recommended**: Configure trusted proxies if behind a load balancer
+- **Recommended**: Implement rate limiting appropriate for your traffic
+
 ## Authentication
 
 All API endpoints require authentication using **Laravel Sanctum**. Include your API token in the request header:
@@ -33,6 +42,8 @@ API endpoints are rate-limited per pattern type to prevent abuse:
 Generate a new serial number for a specified pattern.
 
 **Endpoint**: `POST /api/v1/serial-numbers/generate`
+
+**Security Note**: The `model_type` parameter must be in the allowed models whitelist configured in `config/serial-pattern.php`. See [SECURITY.md](SECURITY.md) for details.
 
 **Request Body**:
 ```json

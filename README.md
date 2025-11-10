@@ -34,6 +34,17 @@ A powerful Laravel 12 package for generating configurable serial numbers with dy
 - **[Roadmap](ROADMAP.md)** - Upcoming features
 - **[Changelog](CHANGELOG.md)** - Version history
 - **[Release Notes](RELEASE_NOTES_v1.1.0.md)** - v1.1.0 features
+- **[Coding Guidelines](CODING_GUIDELINES.md)** - Development standards and best practices
+- **[Security Policy](SECURITY.md)** - Security considerations and reporting
+
+## 🔒 Security Notice
+
+Before using this package in production, especially the API endpoints, please review the [Security Policy](SECURITY.md) for important security configurations including:
+
+- Model whitelist configuration (required for API)
+- Authorization implementation guidance
+- Rate limiting best practices
+- Proxy configuration for IP spoofing prevention
 
 ## Installation
 
@@ -42,6 +53,20 @@ Install via Composer:
 ```bash
 composer require azaharizaman/controlled-number
 ```
+
+### Optional Dependencies
+
+For enhanced functionality, consider installing:
+
+```bash
+# For rich activity logging (recommended)
+composer require spatie/laravel-activitylog
+
+# For API endpoints (required if using REST API)
+composer require laravel/sanctum
+```
+
+**Note:** The package works without these dependencies. Activity logging will fallback to Laravel's default logger if Spatie Activity Log is not installed.
 
 Publish the configuration file:
 
