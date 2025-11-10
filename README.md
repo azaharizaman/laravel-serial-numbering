@@ -29,13 +29,14 @@ A powerful Laravel 12 package for generating configurable serial numbers with dy
 
 - **[Quick Start](#quick-start)** - Get started in minutes
 - **[API Documentation](API_DOCUMENTATION.md)** - Complete REST API reference
+- **[Authorization Guide](AUTHORIZATION_GUIDE.md)** - Implement access control (Gates, Policies, RBAC)
 - **[Custom Reset Strategies](CUSTOM_RESET_STRATEGIES.md)** - Build custom reset logic
 - **[Examples](EXAMPLES.md)** - Real-world usage examples
+- **[Coding Guidelines](CODING_GUIDELINES.md)** - Development standards and best practices
+- **[Security Policy](SECURITY.md)** - Security considerations and reporting
 - **[Roadmap](ROADMAP.md)** - Upcoming features
 - **[Changelog](CHANGELOG.md)** - Version history
 - **[Release Notes](RELEASE_NOTES_v1.1.0.md)** - v1.1.0 features
-- **[Coding Guidelines](CODING_GUIDELINES.md)** - Development standards and best practices
-- **[Security Policy](SECURITY.md)** - Security considerations and reporting
 
 ## 🔒 Security Notice
 
