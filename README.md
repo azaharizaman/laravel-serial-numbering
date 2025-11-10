@@ -18,6 +18,15 @@ A powerful Laravel 12 package for generating configurable serial numbers with dy
 - 🔌 **Extensible** - Register custom segment resolvers for specialized patterns
 - 🧪 **Well Tested** - Comprehensive test suite included
 
+## Roadmap
+
+📋 See our [ROADMAP.md](ROADMAP.md) for upcoming features including:
+- RESTful API endpoints for external integrations
+- Enhanced audit logging with Spatie Activity Log
+- Blockchain verification for critical documents
+- Custom fiscal year reset logic
+- High-concurrency stress tests
+
 ## Installation
 
 Install via Composer:
