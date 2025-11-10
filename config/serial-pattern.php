@@ -72,9 +72,10 @@ return [
         
         // Activity log integration (requires spatie/laravel-activitylog)
         'activity_log' => [
-            'enabled' => true,
+            'enabled' => false, // Set to true if spatie/laravel-activitylog is installed
             'log_name' => 'serial', // Log name for activity log
             'include_properties' => true, // Log additional context
+            'tenant_resolver' => null, // Optional: Custom callable to resolve tenant_id
         ],
     ],
 
@@ -102,7 +103,7 @@ return [
     |
     */
 
-        'lock' => [
+    'lock' => [
         'enabled' => true,
         'timeout' => 10, // seconds
         'store' => 'default', // cache store to use for locks
@@ -118,11 +119,17 @@ return [
     |
     */
 
-
     'api' => [
         'enabled' => env('SERIAL_API_ENABLED', false),
         'prefix' => 'api/v1/serial-numbers',
         'middleware' => ['api', 'auth:sanctum'],
+        
+        // Allowed model classes for serial generation via API
+        'allowed_models' => [
+            // Add your model classes here, e.g.:
+            // \App\Models\Invoice::class,
+            // \App\Models\Order::class,
+        ],
         
         // Rate limiting per pattern type
         'rate_limit' => [

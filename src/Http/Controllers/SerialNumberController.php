@@ -20,6 +20,40 @@ class SerialNumberController extends Controller
     ) {}
 
     /**
+     * Resolve and validate model from request data.
+     *
+     * @param array $validated
+     * @return \Illuminate\Database\Eloquent\Model|null
+     * @throws \InvalidArgumentException
+     */
+    private function resolveModel(array $validated): ?\Illuminate\Database\Eloquent\Model
+    {
+        if (empty($validated['model_type']) || empty($validated['model_id'])) {
+            return null;
+        }
+        
+        $modelClass = $validated['model_type'];
+        
+        // Validate class exists
+        if (!class_exists($modelClass)) {
+            throw new \InvalidArgumentException('Model class does not exist');
+        }
+        
+        // Validate it's an Eloquent model
+        if (!is_subclass_of($modelClass, \Illuminate\Database\Eloquent\Model::class)) {
+            throw new \InvalidArgumentException('Invalid model type');
+        }
+        
+        // Check against allowed models list if configured
+        $allowedModels = config('serial-pattern.api.allowed_models', []);
+        if (!empty($allowedModels) && !in_array($modelClass, $allowedModels, true)) {
+            throw new \InvalidArgumentException('Model type not allowed');
+        }
+        
+        return $modelClass::findOrFail($validated['model_id']);
+    }
+
+    /**
      * Generate a new serial number.
      *
      * POST /api/v1/serial-numbers/generate
@@ -41,13 +75,7 @@ class SerialNumberController extends Controller
 
         try {
             // Resolve model if provided
-            $model = null;
-            if (!empty($validated['model_type']) && !empty($validated['model_id'])) {
-                $modelClass = $validated['model_type'];
-                if (class_exists($modelClass)) {
-                    $model = $modelClass::findOrFail($validated['model_id']);
-                }
-            }
+            $model = $this->resolveModel($validated);
 
             $serial = $this->serialManager->generate(
                 $validated['type'],
@@ -72,10 +100,21 @@ class SerialNumberController extends Controller
                 'message' => 'Model not found',
             ], 404);
 
-        } catch (\Exception $e) {
+        } catch (\InvalidArgumentException $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
+            ], 400);
+
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Serial generation failed', [
+                'exception' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while generating serial number',
             ], 400);
         }
     }
@@ -101,13 +140,7 @@ class SerialNumberController extends Controller
 
         try {
             // Resolve model if provided
-            $model = null;
-            if (!empty($validated['model_type']) && !empty($validated['model_id'])) {
-                $modelClass = $validated['model_type'];
-                if (class_exists($modelClass)) {
-                    $model = $modelClass::findOrFail($validated['model_id']);
-                }
-            }
+            $model = $this->resolveModel($validated);
 
             $preview = $this->serialManager->preview(
                 $type,
@@ -124,10 +157,21 @@ class SerialNumberController extends Controller
                 'message' => 'Serial number preview generated',
             ]);
 
-        } catch (\Exception $e) {
+        } catch (\InvalidArgumentException $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
+            ], 400);
+
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Serial preview failed', [
+                'exception' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while generating serial preview',
             ], 400);
         }
     }
@@ -168,9 +212,14 @@ class SerialNumberController extends Controller
             ]);
 
         } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Sequence reset failed', [
+                'exception' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage(),
+                'message' => 'An error occurred while resetting sequence',
             ], 400);
         }
     }
@@ -214,9 +263,14 @@ class SerialNumberController extends Controller
             ]);
 
         } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Serial void failed', [
+                'exception' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage(),
+                'message' => 'An error occurred while voiding serial number',
             ], 400);
         }
     }
@@ -273,9 +327,14 @@ class SerialNumberController extends Controller
             return SerialLogResource::collection($logs);
 
         } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Serial logs query failed', [
+                'exception' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage(),
+                'message' => 'An error occurred while querying serial logs',
             ], 400);
         }
     }

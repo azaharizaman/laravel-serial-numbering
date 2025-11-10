@@ -41,25 +41,31 @@ class RateLimitSerialGeneration
 
     /**
      * Resolve request signature for rate limiting.
+     *
+     * Note: Ensure Laravel's TrustProxies middleware is properly configured
+     * when using this behind a proxy/load balancer.
      */
     protected function resolveRequestSignature(Request $request): string
     {
         $user = $request->user();
         $patternType = $request->input('type') ?? $request->route('type') ?? 'global';
+        
+        // Use getClientIp() with ip() fallback for better proxy handling
+        $clientIp = $request->getClientIp() ?: $request->ip();
 
         if ($user) {
             return sprintf(
                 'serial_generation:%s:%s:%s',
                 $user->id,
                 $patternType,
-                $request->ip()
+                $clientIp
             );
         }
 
         return sprintf(
             'serial_generation:%s:%s',
             $patternType,
-            $request->ip()
+            $clientIp
         );
     }
 

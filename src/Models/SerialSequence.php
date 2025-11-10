@@ -94,7 +94,8 @@ class SerialSequence extends Model
 
         $config = $this->reset_strategy_config ?? [];
         
-        // Instantiate strategy with config
+        // Instantiate strategy - use positional arguments based on array values
+        // The config should provide parameters in the correct order
         $strategy = new $strategyClass(...array_values($config));
 
         if (!$strategy instanceof \AzahariZaman\ControlledNumber\Contracts\ResetStrategyInterface) {

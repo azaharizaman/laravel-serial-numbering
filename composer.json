@@ -16,8 +16,10 @@
     "illuminate/console": "^12.0",
     "illuminate/routing": "^12.0",
     "illuminate/http": "^12.0",
-    "spatie/laravel-activitylog": "^4.8",
     "laravel/sanctum": "^4.0"
+  },
+  "suggest": {
+    "spatie/laravel-activitylog": "Required for enhanced activity logging features (^4.8)"
   },
   "require-dev": {
     "phpunit/phpunit": "^10.5",

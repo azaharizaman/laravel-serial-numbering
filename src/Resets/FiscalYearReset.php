@@ -19,13 +19,21 @@ class FiscalYearReset implements ResetStrategyInterface
     /**
      * Create a new fiscal year reset strategy.
      *
-     * @param int $startMonth Starting month (1=January, 4=April, etc.)
-     * @param int $startDay Starting day of the month
+     * @param int $start_month Starting month (1=January, 4=April, etc.)
+     * @param int $start_day Starting day of the month
+     * @throws \InvalidArgumentException If the date is invalid
      */
-    public function __construct(int $startMonth = 4, int $startDay = 1)
+    public function __construct(int $start_month = 4, int $start_day = 1)
     {
-        $this->startMonth = max(1, min(12, $startMonth));
-        $this->startDay = max(1, min(31, $startDay));
+        $this->startMonth = max(1, min(12, $start_month));
+        $this->startDay = max(1, min(31, $start_day));
+
+        // Validate the date is possible (use a leap year for maximum coverage)
+        if (!checkdate($this->startMonth, $this->startDay, 2024)) {
+            throw new \InvalidArgumentException(
+                "Invalid fiscal year start date: {$this->startMonth}/{$this->startDay}"
+            );
+        }
     }
 
     /**

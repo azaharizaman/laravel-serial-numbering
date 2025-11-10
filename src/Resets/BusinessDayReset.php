@@ -19,12 +19,12 @@ class BusinessDayReset implements ResetStrategyInterface
     /**
      * Create a new business day reset strategy.
      *
-     * @param array $skipDays Days of week to skip (0=Sunday, 6=Saturday)
+     * @param array $skip_days Days of week to skip (0=Sunday, 6=Saturday)
      * @param array $holidays Array of holiday dates in Y-m-d format
      */
-    public function __construct(array $skipDays = [0, 6], array $holidays = [])
+    public function __construct(array $skip_days = [0, 6], array $holidays = [])
     {
-        $this->skipDays = $skipDays;
+        $this->skipDays = $skip_days;
         $this->holidays = $holidays;
     }
 
@@ -53,14 +53,22 @@ class BusinessDayReset implements ResetStrategyInterface
      *
      * @param \DateTime $date
      * @return \DateTime
+     * @throws \RuntimeException If no business day found within 365 days
      */
     protected function getLastBusinessDay(\DateTime $date): \DateTime
     {
         $checkDate = clone $date;
+        $maxIterations = 365; // Prevent infinite loops
+        $iterations = 0;
 
-        // Walk backwards until we find a business day
-        while ($this->isNonBusinessDay($checkDate)) {
+        // Walk backwards until we find a business day or reach max iterations
+        while ($this->isNonBusinessDay($checkDate) && $iterations < $maxIterations) {
             $checkDate->modify('-1 day');
+            $iterations++;
+        }
+
+        if ($iterations >= $maxIterations) {
+            throw new \RuntimeException('Could not find a business day within 365 days');
         }
 
         return $checkDate;
