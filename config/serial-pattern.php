@@ -102,9 +102,33 @@ return [
     |
     */
 
-    'lock' => [
+        'lock' => [
         'enabled' => true,
         'timeout' => 10, // seconds
         'store' => 'default', // cache store to use for locks
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | API Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Enable RESTful API endpoints for serial number operations.
+    | Requires Laravel Sanctum for authentication.
+    |
+    */
+
+
+    'api' => [
+        'enabled' => env('SERIAL_API_ENABLED', false),
+        'prefix' => 'api/v1/serial-numbers',
+        'middleware' => ['api', 'auth:sanctum'],
+        
+        // Rate limiting per pattern type
+        'rate_limit' => [
+            'enabled' => true,
+            'max_attempts' => 60, // requests per window
+            'decay_minutes' => 1, // time window in minutes
+        ],
     ],
 ];

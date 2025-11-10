@@ -41,6 +41,17 @@ class ControlledNumberServiceProvider extends ServiceProvider
         $this->registerMigrations();
         $this->registerCommands();
         $this->registerObservers();
+        $this->registerRoutes();
+    }
+
+    /**
+     * Register API routes.
+     */
+    protected function registerRoutes(): void
+    {
+        if (config('serial-pattern.api.enabled', false)) {
+            $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+        }
     }
 
     /**

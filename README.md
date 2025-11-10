@@ -4,28 +4,36 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/azaharizaman/controlled-number.svg?style=flat-square)](https://packagist.org/packages/azaharizaman/controlled-number)
 [![License](https://img.shields.io/packagist/l/azaharizaman/controlled-number.svg?style=flat-square)](https://packagist.org/packages/azaharizaman/controlled-number)
 
-A powerful Laravel 12 package for generating configurable serial numbers with dynamic segments, auto-reset rules, and comprehensive audit logging. Perfect for invoices, orders, tickets, and any entity requiring unique sequential identifiers.
+A powerful Laravel 12 package for generating configurable serial numbers with dynamic segments, custom reset strategies, comprehensive audit logging, and RESTful API support. Perfect for invoices, orders, tickets, and any entity requiring unique sequential identifiers.
 
-## Features
+## ✨ Features
 
+### Core Features
 - 🎯 **Pattern-Based Generation** - Create serial numbers using dynamic segments like `{year}`, `{month}`, `{number}`, and custom model properties
-- 🔄 **Auto-Reset Rules** - Configure daily, weekly, monthly, yearly, or custom interval resets
+- 🔄 **Auto-Reset Rules** - Configure daily, weekly, monthly, yearly, interval, or custom reset strategies
 - 🔒 **Concurrency Safe** - Built-in atomic locks prevent race conditions in high-traffic environments
 - 📊 **Audit Logging** - Track every serial number generation with user information and timestamps
 - ✅ **Uniqueness Enforcement** - Automatic collision detection and prevention
 - 🗑️ **Serial Voiding** - Soft-delete approach for cancelled or erroneous serials
 - 🧩 **Eloquent Integration** - Simple trait for seamless model integration
 - 🔌 **Extensible** - Register custom segment resolvers for specialized patterns
-- 🧪 **Well Tested** - Comprehensive test suite included
+- 🧪 **Well Tested** - 71 tests with 163 assertions
 
-## Roadmap
+### New in v1.1.0
+- 🔄 **Custom Reset Strategies** - Fiscal year resets, business day resets, and pluggable custom logic
+- � **Spatie Activity Log Integration** - Rich audit trail with tenant support and activity timeline
+- 🌐 **RESTful API Endpoints** - Generate, preview, reset, void, and query serials via REST API
+- 🧪 **Concurrency Stress Tests** - Validated under 100+ concurrent operations
 
-📋 See our [ROADMAP.md](ROADMAP.md) for upcoming features including:
-- RESTful API endpoints for external integrations
-- Enhanced audit logging with Spatie Activity Log
-- Blockchain verification for critical documents
-- Custom fiscal year reset logic
-- High-concurrency stress tests
+## 📋 Documentation
+
+- **[Quick Start](#quick-start)** - Get started in minutes
+- **[API Documentation](API_DOCUMENTATION.md)** - Complete REST API reference
+- **[Custom Reset Strategies](CUSTOM_RESET_STRATEGIES.md)** - Build custom reset logic
+- **[Examples](EXAMPLES.md)** - Real-world usage examples
+- **[Roadmap](ROADMAP.md)** - Upcoming features
+- **[Changelog](CHANGELOG.md)** - Version history
+- **[Release Notes](RELEASE_NOTES_v1.1.0.md)** - v1.1.0 features
 
 ## Installation
 
