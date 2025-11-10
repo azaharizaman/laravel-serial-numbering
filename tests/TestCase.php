@@ -22,6 +22,16 @@ abstract class TestCase extends BaseTestCase
         
         $this->setUpDatabase();
         $this->runMigrations();
+        
+        // Set default config after database is ready
+        if (function_exists('config')) {
+            config([
+                'serial-pattern.lock.enabled' => false, // Disable locking for tests
+                'serial-pattern.logging.enabled' => true,
+                'serial-pattern.logging.track_user' => false,
+                'serial-pattern.logging.activity_log.enabled' => false, // Disable Spatie activity log in tests
+            ]);
+        }
     }
 
     protected function setUpDatabase(): void
@@ -49,6 +59,8 @@ abstract class TestCase extends BaseTestCase
             $table->string('reset_type')->default('never');
             $table->unsignedInteger('reset_interval')->nullable();
             $table->timestamp('last_reset_at')->nullable();
+            $table->string('reset_strategy_class')->nullable();
+            $table->json('reset_strategy_config')->nullable();
             $table->timestamps();
             
             $table->unique('name');

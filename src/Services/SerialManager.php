@@ -8,19 +8,22 @@ use AzahariZaman\ControlledNumber\Exceptions\InvalidPatternException;
 use AzahariZaman\ControlledNumber\Exceptions\SerialCollisionException;
 use AzahariZaman\ControlledNumber\Models\SerialLog;
 use AzahariZaman\ControlledNumber\Models\SerialSequence;
+use AzahariZaman\ControlledNumber\Traits\LogsSerialActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class SerialManager
 {
+    use LogsSerialActivity;
+    
     protected SegmentResolver $resolver;
     protected array $patterns = [];
 
     public function __construct(SegmentResolver $resolver)
     {
         $this->resolver = $resolver;
-        $this->patterns = config('serial-pattern.patterns', []);
+        $this->patterns = function_exists('config') ? config('serial-pattern.patterns', []) : [];
     }
 
     /**
@@ -39,10 +42,12 @@ class SerialManager
         $pattern->validate();
 
         // Use atomic lock to prevent race conditions
-        $lockKey = "serial_generation:{$patternName}";
-        $lockTimeout = config('serial-pattern.lock.timeout', 10);
+        $lockEnabled = function_exists('config') ? config('serial-pattern.lock.enabled', false) : false;
 
-        if (config('serial-pattern.lock.enabled', true)) {
+        if ($lockEnabled) {
+            $lockKey = "serial_generation:{$patternName}";
+            $lockTimeout = function_exists('config') ? config('serial-pattern.lock.timeout', 10) : 10;
+            
             return Cache::lock($lockKey, $lockTimeout)->block($lockTimeout, function () use ($patternName, $pattern, $model, $context) {
                 return $this->generateSerial($patternName, $pattern, $model, $context);
             });
@@ -84,6 +89,15 @@ class SerialManager
                 $this->logSerial($serial, $patternName, $model);
             }
 
+            // Log activity
+            $this->logActivity('serial_generated', [
+                'serial' => $serial,
+                'pattern_name' => $patternName,
+                'model_type' => $model ? get_class($model) : null,
+                'model_id' => $model ? $model->getKey() : null,
+                'sequence_number' => $nextNumber,
+            ], $model);
+
             return $serial;
         });
     }
@@ -99,14 +113,22 @@ class SerialManager
             $patternConfig = $pattern->getConfig();
             $numberConfig = $pattern->getNumberConfig();
 
-            $sequence = SerialSequence::create([
+            $data = [
                 'name' => $patternName,
                 'pattern' => $pattern->getPattern(),
                 'current_number' => $numberConfig['start'] - 1,
                 'reset_type' => ResetType::from($patternConfig['reset'] ?? 'never'),
                 'reset_interval' => $patternConfig['interval'] ?? null,
                 'last_reset_at' => function_exists('now') ? now() : \Illuminate\Support\Carbon::now(),
-            ]);
+            ];
+
+            // Add custom reset strategy if configured
+            if (isset($patternConfig['reset_strategy']) && $patternConfig['reset'] === 'custom') {
+                $data['reset_strategy_class'] = $patternConfig['reset_strategy'];
+                $data['reset_strategy_config'] = $patternConfig['reset_config'] ?? [];
+            }
+
+            $sequence = SerialSequence::create($data);
         }
 
         return $sequence;
@@ -189,6 +211,14 @@ class SerialManager
         }
 
         $log->void($reason);
+
+        // Log activity
+        $this->logActivity('serial_voided', [
+            'serial' => $serial,
+            'pattern_name' => $log->pattern_name,
+            'void_reason' => $reason,
+        ], $log->model);
+
         return true;
     }
 
@@ -204,7 +234,15 @@ class SerialManager
         }
 
         $start = $startValue ?? $this->getPatternConfig($patternName)['start'] ?? 1;
+        $previousNumber = $sequence->current_number;
         $sequence->reset($start);
+
+        // Log activity
+        $this->logActivity('sequence_reset', [
+            'pattern_name' => $patternName,
+            'previous_number' => $previousNumber,
+            'reset_to' => $start,
+        ], $sequence);
 
         return true;
     }
