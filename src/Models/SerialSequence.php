@@ -20,6 +20,8 @@ class SerialSequence extends Model
         'reset_type',
         'reset_interval',
         'last_reset_at',
+        'reset_strategy_class',
+        'reset_strategy_config',
     ];
 
     /**
@@ -32,6 +34,7 @@ class SerialSequence extends Model
         'reset_interval' => 'integer',
         'last_reset_at' => 'datetime',
         'reset_type' => ResetType::class,
+        'reset_strategy_config' => 'array',
     ];
 
     /**
@@ -67,9 +70,60 @@ class SerialSequence extends Model
      */
     public function shouldReset(): bool
     {
+        // If using custom reset strategy, delegate to that class
+        if ($this->reset_type === ResetType::CUSTOM && $this->reset_strategy_class) {
+            return $this->evaluateCustomResetStrategy();
+        }
+
         return $this->reset_type->shouldReset(
             $this->last_reset_at,
             $this->reset_interval ?? 1
         );
+    }
+
+    /**
+     * Evaluate custom reset strategy.
+     */
+    protected function evaluateCustomResetStrategy(): bool
+    {
+        $strategyClass = $this->reset_strategy_class;
+
+        if (!class_exists($strategyClass)) {
+            return false;
+        }
+
+        $config = $this->reset_strategy_config ?? [];
+        
+        // Instantiate strategy with config
+        $strategy = new $strategyClass(...array_values($config));
+
+        if (!$strategy instanceof \AzahariZaman\ControlledNumber\Contracts\ResetStrategyInterface) {
+            return false;
+        }
+
+        return $strategy->shouldReset(
+            $this->last_reset_at,
+            $this->reset_interval ?? 1
+        );
+    }
+
+    /**
+     * Get the custom reset strategy instance.
+     */
+    public function getResetStrategy(): ?\AzahariZaman\ControlledNumber\Contracts\ResetStrategyInterface
+    {
+        if ($this->reset_type !== ResetType::CUSTOM || !$this->reset_strategy_class) {
+            return null;
+        }
+
+        $strategyClass = $this->reset_strategy_class;
+
+        if (!class_exists($strategyClass)) {
+            return null;
+        }
+
+        $config = $this->reset_strategy_config ?? [];
+        
+        return new $strategyClass(...array_values($config));
     }
 }

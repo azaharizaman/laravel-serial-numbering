@@ -28,6 +28,32 @@ return [
             'interval' => 1,
             'delimiters' => ['-'],
         ],
+        // Example: Fiscal year invoice (April to March)
+        'fiscal_invoice' => [
+            'pattern' => 'FY-{fiscal_year}-{number}',
+            'start' => 1,
+            'digits' => 5,
+            'reset' => 'custom',
+            'reset_strategy' => \AzahariZaman\ControlledNumber\Resets\FiscalYearReset::class,
+            'reset_config' => [
+                'start_month' => 4, // April
+                'start_day' => 1,
+            ],
+            'delimiters' => ['-'],
+        ],
+        // Example: Business day ticket (skips weekends)
+        'ticket' => [
+            'pattern' => 'TKT-{year}{month}{day}-{number}',
+            'start' => 1,
+            'digits' => 4,
+            'reset' => 'custom',
+            'reset_strategy' => \AzahariZaman\ControlledNumber\Resets\BusinessDayReset::class,
+            'reset_config' => [
+                'skip_days' => [0, 6], // Sunday and Saturday
+                'holidays' => [], // Add Y-m-d formatted dates
+            ],
+            'delimiters' => ['-'],
+        ],
     ],
 
     /*
@@ -43,6 +69,13 @@ return [
     'logging' => [
         'enabled' => true,
         'track_user' => true,
+        
+        // Activity log integration (requires spatie/laravel-activitylog)
+        'activity_log' => [
+            'enabled' => true,
+            'log_name' => 'serial', // Log name for activity log
+            'include_properties' => true, // Log additional context
+        ],
     ],
 
     /*
